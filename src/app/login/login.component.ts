@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { __values } from 'tslib';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -7,25 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private http:HttpClient, private router: Router) { }
   ngOnInit(): void {
   }
+ 
 
 login(){
- console.log("welcome to login");
-}
+ console.log("welcome to login"); 
+ this.http.get('http://localhost:5000/auth/login')
+ var data=  sessionStorage.getItem("token");
+ //sessionStorage.setItem("token",data);
+ sessionStorage.setItem('token','data.token')
+ this.router.navigate(["/dashboard"])
 
-forgetPasswd(){
-console.log("forget passwd")
 }
 
 signup(){
-  console.log("sign up form")
+  this.router.navigate(["/signup"])
 }
 
-google(){
-  return this
+getall(){
+  console.log("get All");
+  this.http.get('http://localhost:5000/auth/all')
+
 }
+
+
 
 }
